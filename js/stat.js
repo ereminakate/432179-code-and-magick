@@ -2,15 +2,15 @@
 
 window.renderStatistics = function (ctx, names, times) {
 
-  var max = -1,
-    maxIndex = -1,
-    histogramWidth = 40,             // px;
-    histogramHeigth = 150, // px;
-    indent = 50,    // px;
-    step,
+  var max = -1;
+  var maxIndex = -1;
+  var histogramWidth = 40;             // px;
+  var histogramHeigth = 150; // px;
+  var  indent = 50;    // px;
+  var step;
 
-    initialX = 150, // px;
-    initialY = 250; // px
+  var initialX = 150; // px;
+  var  initialY = 250; // px
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.strokeRect(110, 20, 420, 270);
