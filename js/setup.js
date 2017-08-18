@@ -13,26 +13,26 @@ var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var wizards = createWizards();
 
-//Функция создания массива похожих персонажей
+// Функция создания массива похожих персонажей
 function createWizards() {
   var wizardsArrays = [];
 
-  for (var i = 0;  i < 4; i++) {
+  for (var i = 0; i < 4; i++) {
     wizardsArrays[i] = {
-      name: selectRandomElementArray(WIZARD_NAMES) + " " + selectRandomElementArray(WIZARD_SURNAMES),
+      name: selectRandomElementArray(WIZARD_NAMES) + ' ' + selectRandomElementArray(WIZARD_SURNAMES),
       coatColor: selectRandomElementArray(COAT_COLORS),
       eyesColor: selectRandomElementArray(EYES_COLORS)
-    }
+    };
   }
   return wizardsArrays;
-};
+}
 
-//Функция выбора случайных элементов массива
+// Функция выбора случайных элементов массива
 function selectRandomElementArray(arrs) {
   return arrs[Math.floor(Math.random() * arrs.length)];
-};
+}
 
-//Функция заполнения характеристик волшебника
+// Функция заполнения характеристик волшебника
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
