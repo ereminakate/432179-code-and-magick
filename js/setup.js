@@ -2,15 +2,54 @@
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+var COLOR_COATS = ['rgb(101, 137, 164)',
+                   'rgb(241, 43, 107)',
+                   'rgb(146, 100, 161)',
+                   'rgb(56, 159, 117)',
+                   'rgb(215, 210, 55)',
+                   'rgb(0, 0, 0)'];
+var COLOR_EYES = ['black', 
+                  'red', 
+                  'blue', 
+                  'yellow', 
+                  'green'];
+var COLOR_FIREBALL = ['#ee4830',
+                      '#30a8ee',
+                      '#5ce6c0',
+                      '#e848d5',
+                      '#e6e848']
+
 var userDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
 var userNameInput = document.querySelector('.setup-user-name');
-debugger;
+var setupWizard = document.querySelector('.setup-wizard');
+var wizardCoat = setupWizard.querySelector('.wizard-coat');
+var wizardEyes = setupWizard.querySelector('.wizard-eyes');
+var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
+var setupSave = document.querySelector('.setup-submit');
+
+// При клике на мантию - она меняет цвет случайным образом из массива цветов
+wizardCoat.addEventListener('click', function() {
+    wizardCoat.style.fill = selectRandomElementArray(COLOR_COATS);
+});
+
+// При клике на глаза - они меняет цвет случайным образом из массива цветов
+wizardEyes.addEventListener('click', function() {
+    wizardEyes.style.fill = selectRandomElementArray(COLOR_EYES);
+});
+
+// При клике на файербол - он меняет цвет случайным образом из массива цветов
+setupFireballWrap.addEventListener('click', function() {
+    debugger;
+    setupFireballWrap.style.backgroundColor = selectRandomElementArray(COLOR_FIREBALL);
+});
+
+// Проверка заполнения имени волшебника
 userNameInput.addEventListener('invalid', function(evt) {
   if (!userNameInput.validity.valid) {
     if (userNameInput.validity.tooShort) {
-      userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+      userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов!!!');
     } else if (userNameInput.validity.tooLong) {
       userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
     } else if (userNameInput.validity.valueMissing) {
@@ -21,22 +60,26 @@ userNameInput.addEventListener('invalid', function(evt) {
   }
 });
 
+// Функция закрытия окна настроек при нажатии на ESC
 var onPopupEscPress = function(evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
 };
 
+// Функция открытия окна настроек
 var openPopup = function() {
     userDialog.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
 };
 
+// Функция закрытия окна настроек
 var closePopup = function() {
     userDialog.classList.add('hidden');
     document.addEventListener('keydown', onPopupEscPress);
 };
 
+// Обработчик открытия окна настроек при клике и нажатии на ENTER
 setupOpen.addEventListener('click', openPopup);
 setupOpen.addEventListener('keydown', function(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
@@ -44,6 +87,7 @@ setupOpen.addEventListener('keydown', function(evt) {
   }
 });
 
+// Обработчик закрытия окна настроек при клике и нажатии на ENTER
 setupClose.addEventListener('click', closePopup);
 setupClose.addEventListener('keydown', function(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
