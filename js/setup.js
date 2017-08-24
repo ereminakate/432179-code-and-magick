@@ -1,7 +1,55 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = document.querySelector('.setup-close');
+var userNameInput = document.querySelector('.setup-user-name');
+debugger;
+userNameInput.addEventListener('invalid', function(evt) {
+  if (!userNameInput.validity.valid) {
+    if (userNameInput.validity.tooShort) {
+      userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+    } else if (userNameInput.validity.tooLong) {
+      userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+    } else if (userNameInput.validity.valueMissing) {
+      userNameInput.setCustomValidity('Обязательное поле');
+    }
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+var onPopupEscPress = function(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var openPopup = function() {
+    userDialog.classList.remove('hidden');
+    document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function() {
+    userDialog.classList.add('hidden');
+    document.addEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', openPopup);
+setupOpen.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', closePopup);
+setupClose.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
