@@ -3,21 +3,24 @@
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 var COLOR_COATS = ['rgb(101, 137, 164)',
-                   'rgb(241, 43, 107)',
-                   'rgb(146, 100, 161)',
-                   'rgb(56, 159, 117)',
-                   'rgb(215, 210, 55)',
-                   'rgb(0, 0, 0)'];
-var COLOR_EYES = ['black', 
-                  'red', 
-                  'blue', 
-                  'yellow', 
-                  'green'];
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+var COLOR_EYES = ['black',
+  'red',
+  'blue',
+  'yellow',
+  'green'
+];
 var COLOR_FIREBALL = ['#ee4830',
-                      '#30a8ee',
-                      '#5ce6c0',
-                      '#e848d5',
-                      '#e6e848']
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
 
 var userDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
@@ -31,18 +34,18 @@ var setupSave = document.querySelector('.setup-submit');
 
 // При клике на мантию - она меняет цвет случайным образом из массива цветов
 wizardCoat.addEventListener('click', function() {
-    wizardCoat.style.fill = selectRandomElementArray(COLOR_COATS);
+  wizardCoat.style.fill = selectRandomElementArray(COLOR_COATS);
 });
 
 // При клике на глаза - они меняет цвет случайным образом из массива цветов
 wizardEyes.addEventListener('click', function() {
-    wizardEyes.style.fill = selectRandomElementArray(COLOR_EYES);
+  wizardEyes.style.fill = selectRandomElementArray(COLOR_EYES);
 });
 
 // При клике на файербол - он меняет цвет случайным образом из массива цветов
 setupFireballWrap.addEventListener('click', function() {
-    debugger;
-    setupFireballWrap.style.backgroundColor = selectRandomElementArray(COLOR_FIREBALL);
+  debugger;
+  setupFireballWrap.style.backgroundColor = selectRandomElementArray(COLOR_FIREBALL);
 });
 
 // Проверка заполнения имени волшебника
@@ -69,14 +72,14 @@ var onPopupEscPress = function(evt) {
 
 // Функция открытия окна настроек
 var openPopup = function() {
-    userDialog.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 // Функция закрытия окна настроек
 var closePopup = function() {
-    userDialog.classList.add('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+  userDialog.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 // Обработчик открытия окна настроек при клике и нажатии на ENTER
@@ -125,7 +128,7 @@ function selectRandomElementArray(arrs) {
 }
 
 // Функция заполнения характеристик волшебника
-var renderWizard = function (wizard) {
+var renderWizard = function(wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
