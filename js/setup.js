@@ -30,26 +30,24 @@ var setupWizard = document.querySelector('.setup-wizard');
 var wizardCoat = setupWizard.querySelector('.wizard-coat');
 var wizardEyes = setupWizard.querySelector('.wizard-eyes');
 var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
-var setupSave = document.querySelector('.setup-submit');
 
 // При клике на мантию - она меняет цвет случайным образом из массива цветов
-wizardCoat.addEventListener('click', function() {
+wizardCoat.addEventListener('click', function () {
   wizardCoat.style.fill = selectRandomElementArray(COLOR_COATS);
 });
 
 // При клике на глаза - они меняет цвет случайным образом из массива цветов
-wizardEyes.addEventListener('click', function() {
+wizardEyes.addEventListener('click', function () {
   wizardEyes.style.fill = selectRandomElementArray(COLOR_EYES);
 });
 
 // При клике на файербол - он меняет цвет случайным образом из массива цветов
-setupFireballWrap.addEventListener('click', function() {
-  debugger;
+setupFireballWrap.addEventListener('click', function () {
   setupFireballWrap.style.backgroundColor = selectRandomElementArray(COLOR_FIREBALL);
 });
 
 // Проверка заполнения имени волшебника
-userNameInput.addEventListener('invalid', function(evt) {
+userNameInput.addEventListener('invalid', function () {
   if (!userNameInput.validity.valid) {
     if (userNameInput.validity.tooShort) {
       userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов!!!');
@@ -63,36 +61,46 @@ userNameInput.addEventListener('invalid', function(evt) {
   }
 });
 
+userNameInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+userNameInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
 // Функция закрытия окна настроек при нажатии на ESC
-var onPopupEscPress = function(evt) {
+var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
 };
 
+// Функция закрытия окна настроек при нажатии на крестике на ENTER
+var onPopupCloseENTERPress = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+};
+
 // Функция открытия окна настроек
-var openPopup = function() {
+var openPopup = function () {
   userDialog.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
 };
 
 // Функция закрытия окна настроек
-var closePopup = function() {
+var closePopup = function () {
   userDialog.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscPress);
 };
 
 // Обработчик открытия окна настроек при клике и нажатии на ENTER
 setupOpen.addEventListener('click', openPopup);
-setupOpen.addEventListener('keydown', function(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    openPopup();
-  }
-});
+setupOpen.addEventListener('keydown', onPopupCloseENTERPress);
 
 // Обработчик закрытия окна настроек при клике и нажатии на ENTER
 setupClose.addEventListener('click', closePopup);
-setupClose.addEventListener('keydown', function(evt) {
+setupClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     closePopup();
   }
@@ -128,7 +136,7 @@ function selectRandomElementArray(arrs) {
 }
 
 // Функция заполнения характеристик волшебника
-var renderWizard = function(wizard) {
+var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
