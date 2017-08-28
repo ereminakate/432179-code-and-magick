@@ -61,15 +61,20 @@ userNameInput.addEventListener('invalid', function () {
   }
 });
 
-userNameInput.addEventListener('focus', function () {
-  document.removeEventListener('keydown', onPopupEscPress);
-});
-userNameInput.addEventListener('blur', function () {
-  document.addEventListener('keydown', onPopupEscPress);
+userNameInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else {
+    target.setCustomValidity('');
+  }
 });
 
 // Функция закрытия окна настроек при нажатии на ESC
 var onPopupEscPress = function (evt) {
+  if (document.activeElement.classList.contains('setup-user-name')) {
+    return;
+  }
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
@@ -96,7 +101,11 @@ var closePopup = function () {
 
 // Обработчик открытия окна настроек при клике и нажатии на ENTER
 setupOpen.addEventListener('click', openPopup);
-setupOpen.addEventListener('keydown', onPopupCloseENTERPress);
+setupOpen.addEventListener('keydown', function(event){
+  if (event.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+}, false);
 
 // Обработчик закрытия окна настроек при клике и нажатии на ENTER
 setupClose.addEventListener('click', closePopup);
